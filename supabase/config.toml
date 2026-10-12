@@ -1,0 +1,5 @@
+# Хостинговый проект. Функция notifications вызывается Cron и сама проверяет CRON_SECRET.
+project_id = "ltcrwdgknxwgtffuqdaj"
+
+[functions.notifications]
+verify_jwt = false

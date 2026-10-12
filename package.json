@@ -1,0 +1,36 @@
+{
+  "name": "barbershop",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n web,api,app \"npm run dev --workspace web\" \"npm run dev --workspace api\" \"npm run dev --workspace miniapp\"",
+    "dev:web": "npm run dev --workspace web",
+    "dev:api": "npm run dev --workspace api",
+    "dev:miniapp": "npm run dev --workspace miniapp",
+    "build": "npm run build --workspace web",
+    "start": "npm run start --workspace web",
+    "postinstall": "prisma generate",
+    "lint": "npm run lint --workspace web",
+    "test": "npm run test --workspace api",
+    "test:race": "npm run test:race --workspace api",
+    "test:notifications": "npm run test:notifications --workspace api",
+    "test:analytics": "npm run test:analytics --workspace api",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "prisma db seed",
+    "db:admin": "tsx prisma/ensure-admin.ts"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5",
+    "prisma": "^6.16.2",
+    "tsx": "^4.20.5"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.16.2"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  }
+}

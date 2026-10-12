@@ -1,0 +1,30 @@
+{
+  "name": "api",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "tsx --test src/slots.test.ts src/telegram.test.ts src/bot/bot.test.ts src/notifications.test.ts src/admin.test.ts src/analytics.test.ts",
+    "test:race": "tsx --test src/race.test.ts",
+    "test:bot": "tsx --test src/bot/link.test.ts",
+    "test:notifications": "tsx --test src/notifications.db.test.ts",
+    "test:analytics": "tsx --test src/analytics.db.test.ts"
+  },
+  "dependencies": {
+    "@fastify/cookie": "^11.0.2",
+    "@fastify/cors": "^11.1.0",
+    "@fastify/multipart": "^9.0.3",
+    "@prisma/client": "^6.16.2",
+    "argon2": "^0.44.0",
+    "dotenv": "^17.2.3",
+    "fastify": "^5.6.1",
+    "grammy": "^1.46.0",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "tsx": "^4.20.5",
+    "typescript": "^5"
+  }
+}
