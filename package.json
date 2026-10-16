@@ -11,7 +11,7 @@
     "dev:miniapp": "npm run dev --workspace miniapp",
     "build": "npm run build --workspace web",
     "start": "npm run start --workspace web",
-    "postinstall": "prisma generate",
+    "postinstall": "npx prisma generate",
     "lint": "npm run lint --workspace web",
     "test": "npm run test --workspace api",
     "test:race": "npm run test:race --workspace api",
@@ -24,11 +24,11 @@
   },
   "devDependencies": {
     "concurrently": "^10.0.5",
-    "prisma": "^6.16.2",
     "tsx": "^4.20.5"
   },
   "dependencies": {
-    "@prisma/client": "^6.16.2"
+    "@prisma/client": "^6.16.2",
+    "prisma": "^6.16.2"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
