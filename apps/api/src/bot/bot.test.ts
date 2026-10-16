@@ -3,7 +3,7 @@ import test from "node:test";
 import { barberNotice, clientNotice, formatWhen } from "./messages";
 import { barberStartPayload, bookingStartPayload, parseStartPayload, telegramBotUrl } from "./payload";
 import { resetBot } from "./bot";
-import { buildApp } from "../app";
+import { buildApp } from "../create-app";
 
 const visit = {
   startsAt: new Date("2026-10-10T06:00:00.000Z"),

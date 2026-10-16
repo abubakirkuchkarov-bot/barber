@@ -1,7 +1,7 @@
 import cors from "@fastify/cors";
 import cookie from "@fastify/cookie";
 import multipart from "@fastify/multipart";
-import Fastify from "fastify";
+import Fastify, { type FastifyInstance } from "fastify";
 import { registerErrorHandler } from "./errors";
 import { adminRoutes } from "./routes/admin";
 import { availabilityRoutes } from "./routes/availability";
@@ -12,8 +12,7 @@ import { telegramDevRoutes } from "./routes/telegram-dev";
 import { notificationRoutes } from "./routes/notifications";
 import { telegramWebhookRoutes } from "./routes/telegram";
 
-export async function buildApp() {
-  const app = Fastify({ logger: true });
+export async function registerApp(app: FastifyInstance) {
   const localOrigins = [
     "http://localhost:3000",
     "http://localhost:3010",
@@ -47,6 +46,11 @@ export async function buildApp() {
   if (process.env.TELEGRAM_DEV === "1" && process.env.NODE_ENV !== "production") {
     await app.register(telegramDevRoutes, { prefix: "/api/v1" });
   }
+}
 
+/** Для тестов: собирает приложение без listen. */
+export async function buildApp() {
+  const app = Fastify({ logger: true });
+  await registerApp(app);
   return app;
 }

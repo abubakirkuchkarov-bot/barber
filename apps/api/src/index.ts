@@ -1,5 +1,7 @@
 import { config } from "dotenv";
 import { resolve } from "node:path";
+import Fastify from "fastify";
+import { registerApp } from "./create-app";
 
 config({ path: resolve(process.cwd(), "../../.env") });
 
@@ -14,14 +16,15 @@ async function setupBotMenu() {
 }
 
 async function main() {
-  const { buildApp } = await import("./app");
-  const app = await buildApp();
-  try {
-    await app.listen({ host: "0.0.0.0", port: Number(process.env.PORT ?? 3011) });
-  } catch (error: unknown) {
+  const app = Fastify({ logger: true });
+  await registerApp(app);
+
+  const port = Number(process.env.PORT ?? 3011);
+  app.listen({ host: "0.0.0.0", port }).catch((error: unknown) => {
     console.error(error);
     process.exit(1);
-  }
+  });
+
   try {
     await setupBotMenu();
   } catch (error: unknown) {
@@ -29,6 +32,8 @@ async function main() {
     const message = error instanceof Error ? error.message.replaceAll(token, "[token]") : "bot menu failed";
     console.error("telegram menu", message);
   }
+
+  // На Vercel только webhook. Polling — только при явном TELEGRAM_POLLING=1 (локально).
   if (process.env.TELEGRAM_POLLING === "1") {
     const { startPolling } = await import("./bot/bot");
     void startPolling().catch((error: unknown) => {
